@@ -19,7 +19,7 @@
 # AUTODOWNLOADDIR - директория, которую читает transmission для добавления найденных торрентов в автозагрузку
 
 VER='AddTRACK v:0.5 by Intervision'
-TRACKFILE='trackers.txt'
+TRACKFILE='data/trackers.txt'
 TORFILE=''
 TORUSER='debian-transmission'
 TORGROUP='debian-transmission'
@@ -32,7 +32,7 @@ TRACKCOUNT=$(wc -l $TRACKFILE | cut -d" " -f1)
 
 if [ $1 == '-h' ]
 then
-	cat help.txt
+	cat doc/help.txt
 fi
 
 if [ $1 == '-v' ]

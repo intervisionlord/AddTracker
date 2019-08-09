@@ -1,0 +1,10 @@
+http://182.176.139.129:6969/announce
+http://retracker.mgts.by:80/announce
+http://retracker.spark-rostov.ru:80/announce
+http://share.camoe.cn:8080/announce
+http://torrentsmd.eu:8080/announce
+http://tracker.city9x.com:2710/announce
+http://tracker.electro-torrent.pl:80/announce
+http://tracker2.itzmx.com:6961/announce
+http://www.bittorrent-support.com/announce.php
+https://open.kickasstracker.com:443/announce
