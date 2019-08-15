@@ -13,6 +13,11 @@
 # AUTODOWNLOADDIR - директория, которую читает transmission для добавления найденных торрентов в автозагрузку
 
 VER='AddTRACK v:0.6 by Intervision'
+
+# LOCALIZATION
+LANGCODE='RU'
+##############
+
 TRACKFILE='data/trackers.txt'
 TORUSER='debian-transmission'
 TORGROUP='debian-transmission'

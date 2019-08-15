@@ -18,8 +18,14 @@ source conf/conf.sh
 TRACKCOUNT=$(wc -l $TRACKFILE | cut -d" " -f1)
 
 if [ $1 == '-h' ]
-then
-	cat doc/help.txt
+	then
+		cat doc/$LANGCODE/help.txt
+fi
+
+if [ $1 == '' ]
+	then
+		echo -e "Не указаны параметры работы и файлы для обработки. Ознакомьтесь со справочной информацией\n"
+		cat doc/$LANGCODE/help.txt
 fi
 
 if [ $1 == '-v' ]
@@ -80,6 +86,51 @@ else
 	fi
 fi
 
+if [[ $1 == '-f' && $2 != '' ]]
+	then
+		SINGLETORRENT=$2
+
+		echo -e "Одиночный режим\nПрименяется список трекеров к одиночному файлу $SINGLETORRENT"
+		echo $DELIMITER
+
+		for TRACKERS_SINGLE in $(cat $TRACKFILE);
+			do
+				transmission-edit -a $TRACKERS_SINGLE	$SINGLETORRENT;
+		done
+
+		echo -e "\nПрименяются права $TORUSER:$TORGROUP на торрент $SINGLETORRENT\n"
+		chown $TORUSER:$TORGROUP $SINGLETORRENT
+
+		echo -e "Выполняется перенос в директорию автозагрузки: $AUTODOWNLOADDIR\n"
+		mv $SINGLETORRENT $AUTODOWNLOADDIR
+
+		echo "Работа заваршена."
+
+	else
+		if [[ $1  == '-f' && $2 == '' ]]
+			then
+				echo "Выбран режим одиночного файла, но не указан путь к файлу. Хотите указать путь? [Y/n]: "
+				read -q PATH_YESNO
+					if [[ $PATH_YESNO == 'Y' || $PATH_YESNO == 'y' ]]
+						then
+							echo "Укажите полный путь к файлу: "
+							read -q PATHTOTORRENT
+							echo $DELIMITER
+							echo -e "Применяется список трекеров к одиночному файлу $PATHTOTORRENT\n"
+								for TRACKERS_SINGLE_INTERACTIVE in $(cat $TRACKFILE)
+									do
+										transmission-edit -a $TRACKERS_SINGLE_INTERACTIVE $PATHTOTORRENT
+									done
+							echo -e "Применяются права $TORUSER:$TORGROUP к файлу $PATHTOTORRENT\n"
+							chown $TORUSER:$TORGROUP $PATHTOTORRENT
+
+							echo -e "Перемещение файла $PATHTOTORRENT в директорию автозагрузки $AUTODOWNLOADDIR\n"
+							mv $PATHTOTORRENT $AUTODOWNLOADDIR
+
+							echo -e "Работа завершена."
+					fi
+		fi
+fi
 : '
 if [ -n "$1" ]
 then
