@@ -1,11 +1,12 @@
 #!/bin/bash
 
 #################################################################
-# Скрипт прописывания дополнительных трекеров для торрентов	#
-# Версия: 0.4(6)						#
-# Автор: Intervision (Solitario) (twilightradio.ru)		#
+# Скрипт прописывания дополнительных трекеров для торрентов			#
+# Версия: 0.4(6)																								#
+# Автор: Intervision (Solitario)																#
 # ###############################################################
-
+#
+# Вынесено в отдельный файл переменных
 # VER='AddTRACK v:0.6 by Intervision'
 # TRACKFILE='data/trackers.txt'
 # TORUSER='debian-transmission'
@@ -13,7 +14,7 @@
 # AUTODOWNLOADDIR='/opt/transmission/auto'
 # DELIMITER='--------------------'
 
-source conf/conf.sh
+source conf/conf.sh # Переменные и настройка
 
 TRACKCOUNT=$(wc -l $TRACKFILE | cut -d" " -f1)
 
@@ -70,8 +71,8 @@ else
 			echo -e "Перемещение торрент-файлов в директорию автозагрузки\n"
 			echo $DELIMITER
 
-			echo -e "Отладка:\nИспользованы переменные:\n$TRACKERS as TRACKERS\n$RECFILES as RECFILES\n$RECFOLDER as RECFOLDER\n"
-
+## DEBUG
+#			echo -e "Отладка:\nИспользованы переменные:\n$TRACKERS as TRACKERS\n$RECFILES as RECFILES\n$RECFOLDER as RECFOLDER\n"
 #			for READYTORRENTS in $(ls -1 $RECFOLDER)
 #				do
 #					mv $READYTORRENTS $AUTODOWNLOADDIR
@@ -86,12 +87,15 @@ else
 	fi
 fi
 
+# Single File Mode
+# Режим редактирования одиночного файла
 if [[ $1 == '-f' && $2 != '' ]]
 	then
 		SINGLETORRENT=$2
 
-		echo -e "Одиночный режим\nПрименяется список трекеров к одиночному файлу $SINGLETORRENT"
-		echo $DELIMITER
+## DEBUG
+#		echo -e "Одиночный режим\nПрименяется список трекеров к одиночному файлу $SINGLETORRENT"
+#		echo $DELIMITER
 
 		for TRACKERS_SINGLE in $(cat $TRACKFILE);
 			do
