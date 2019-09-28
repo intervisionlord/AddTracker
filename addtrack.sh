@@ -15,6 +15,7 @@
 # DELIMITER='--------------------'
 
 source conf/conf.sh # Переменные и настройка
+source data/Localization/$LANGCODE/main.sh
 
 TRACKCOUNT=$(wc -l $TRACKFILE | cut -d" " -f1)
 
@@ -42,21 +43,21 @@ else
 		then
 			RECFOLDER=$2/
 			TRACKCOUNT=`wc -l $TRACKFILE | awk '{print $1}'`
-			echo -e "Используется рекурсивный режим для директории $RECFOLDER\n"
+			echo -e "$LANSTR_USING_RECURSIVE $RECFOLDER\n"
 
 			RECUDIR=$2
 			TORCOUNT=`find $RECUDIR -type f -name '*.torrent' | wc -l`
 
 		if [ $TORCOUNT != '0' ]
 		then
-			echo -e "Найдено торрент-файлов: $TORCOUNT \n"
+			echo -e "$LANSTR_TORRENTS_FOUND: $TORCOUNT \n"
 			ls -1 $RECUDIR | grep -i ".torrent"
 
 			echo -e "\nПрименяется список трекеров из файла $TRACKFILE\n"
 			echo -e "Общее кол-во трекеров: $TRACKCOUNT\n"
 
 			echo -e "\n$DELIMITER"
-			echo -e "Выполняется рекурсивное изменение файлов\n"
+			echo -e "$LANSTR_DOING_RECURSIVE\n"
 				for TRACKERS in $(cat $TRACKFILE)
 					do
 						transmission-edit -a $TRACKERS $RECFOLDER*\.torrent
@@ -108,7 +109,7 @@ if [[ $1 == '-f' && $2 != '' ]]
 		echo -e "Выполняется перенос в директорию автозагрузки: $AUTODOWNLOADDIR\n"
 		mv $SINGLETORRENT $AUTODOWNLOADDIR
 
-		echo "Работа заваршена."
+		echo "$LANSTR_JOB_COMPLETED"
 
 	else
 		if [[ $1  == '-f' && $2 == '' ]]
@@ -131,7 +132,7 @@ if [[ $1 == '-f' && $2 != '' ]]
 							echo -e "Перемещение файла $PATHTOTORRENT в директорию автозагрузки $AUTODOWNLOADDIR\n"
 							mv $PATHTOTORRENT $AUTODOWNLOADDIR
 
-							echo -e "Работа завершена."
+							echo -e "$LANSTR_JOB_COMPLETED"
 					fi
 		fi
 fi
