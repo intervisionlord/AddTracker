@@ -5,14 +5,6 @@
 # Версия: 0.4(6)																								#
 # Автор: Intervision (Solitario)																#
 # ###############################################################
-#
-# Вынесено в отдельный файл переменных
-# VER='AddTRACK v:0.6 by Intervision'
-# TRACKFILE='data/trackers.txt'
-# TORUSER='debian-transmission'
-# TORGROUP='debian-transmission'
-# AUTODOWNLOADDIR='/opt/transmission/auto'
-# DELIMITER='--------------------'
 
 source conf/conf.sh # Переменные и настройка
 source data/Localization/$LANGCODE/main.sh
@@ -54,7 +46,7 @@ else
 			ls -1 $RECUDIR | grep -i ".torrent"
 
 			echo -e "\nПрименяется список трекеров из файла $TRACKFILE\n"
-			echo -e "Общее кол-во трекеров: $TRACKCOUNT\n"
+			echo -e "$LANSTR_RETRACKERS_TOTAL: $TRACKCOUNT\n"
 
 			echo -e "\n$DELIMITER"
 			echo -e "$LANSTR_DOING_RECURSIVE\n"
@@ -106,7 +98,7 @@ if [[ $1 == '-f' && $2 != '' ]]
 		echo -e "\nПрименяются права $TORUSER:$TORGROUP на торрент $SINGLETORRENT\n"
 		chown $TORUSER:$TORGROUP $SINGLETORRENT
 
-		echo -e "Выполняется перенос в директорию автозагрузки: $AUTODOWNLOADDIR\n"
+		echo -e "$LANSTR_MV_TO_AUTODWNLD: $AUTODOWNLOADDIR\n"
 		mv $SINGLETORRENT $AUTODOWNLOADDIR
 
 		echo "$LANSTR_JOB_COMPLETED"
